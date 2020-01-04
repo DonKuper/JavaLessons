@@ -13,8 +13,8 @@ public class MainExample {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("example");
         EntityManager em = emf.createEntityManager();
 
-        Student student = new Student(22, new Date());
-        Student student2 = new Student( 23, new Date());
+        Student student = new Student("Max", new Date());
+        Student student2 = new Student( "Paul", new Date());
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         em.persist(student);

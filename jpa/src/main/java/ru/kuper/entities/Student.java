@@ -1,38 +1,38 @@
 package ru.kuper.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "students")
-@Setter @Getter
 public class Student {
     @Id @GeneratedValue
     int id;
 
     @Enumerated(EnumType.STRING)
-    Gender gender;
+    private Gender gender;
 
-    @Basic(optional = true)
-    private int age;
-    private Date birth;
+    private String name;
 
     @Basic(fetch = FetchType.LAZY)
     @Lob
     byte[] img;
 
-    public Student(int age, Date birth) {
-        this.age = age;
-        this.birth = birth;
+    public Student(String name, Date birth) {
+        this.name = name;
         gender = Gender.MALE;
     }
 
     public Student(){};
+
+    @Access(AccessType.PROPERTY)
+    public String getName() {
+        return "Mr. " + name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 
 enum Gender {MALE, FEMALE}
