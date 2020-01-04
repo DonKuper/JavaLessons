@@ -16,30 +16,39 @@ public class Student {
     @EmbeddedId
     StudId studId;
 
-
-    @Id
-    int id;
-    @Column(table = "students")
-    private String name;
-    @Column(table = "students")
+    @Basic(optional = true)
     private int age;
-    @Column(table = "students")
     private Date birth;
 
-    public Student(String name, int age, Date birth) {
-        this.name = name;
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    byte[] img;
+
+
+    public Student(String name, String surName, int age, Date birth) {
         this.age = age;
         this.birth = birth;
+        this.studId = new StudId(name,surName);
     }
 
     public Student(){};
 
 }
 
+@Embeddable
 class StudId implements Serializable {
-    String name;
-    String surName;
 
+
+    private String name;
+    private String surName;
+
+    public StudId(String name, String surName) {
+        this.name = name;
+        this.surName = surName;
+    }
+
+    public StudId() {
+    }
 
     public String getName() {
         return name;
