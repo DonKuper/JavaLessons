@@ -12,9 +12,11 @@ import java.util.Objects;
 @Table(name = "students")
 @Setter @Getter
 public class Student {
+    @Id @GeneratedValue
+    int id;
 
-    @EmbeddedId
-    StudId studId;
+    @Enumerated(EnumType.STRING)
+    Gender gender;
 
     @Basic(optional = true)
     private int age;
@@ -24,59 +26,13 @@ public class Student {
     @Lob
     byte[] img;
 
-
-    public Student(String name, String surName, int age, Date birth) {
+    public Student(int age, Date birth) {
         this.age = age;
         this.birth = birth;
-        this.studId = new StudId(name,surName);
+        gender = Gender.MALE;
     }
 
     public Student(){};
-
 }
 
-@Embeddable
-class StudId implements Serializable {
-
-
-    private String name;
-    private String surName;
-
-    public StudId(String name, String surName) {
-        this.name = name;
-        this.surName = surName;
-    }
-
-    public StudId() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurName() {
-        return surName;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudId studId = (StudId) o;
-        return Objects.equals(name, studId.name) &&
-                Objects.equals(surName, studId.surName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surName);
-    }
-}
+enum Gender {MALE, FEMALE}
