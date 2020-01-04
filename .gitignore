@@ -1,3 +1,4 @@
+jpa/target/*
 target/*
 *.iml
 *.jar
